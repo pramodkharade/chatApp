@@ -15,6 +15,9 @@ app.use(express.static(publicDirectoryPath));
 let count = 0;
 io.on('connection',(socket)=>{
     socket.emit('message','Welcome!');
+    socket.on('sendMessage',(sendMsg)=>{
+        io.emit('message',sendMsg);
+    })
     // socket.emit('countUpdated',count);
     // socket.on('increment',()=>{
     //     count++;
