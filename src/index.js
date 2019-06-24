@@ -15,15 +15,13 @@ app.use(express.static(publicDirectoryPath));
 let count = 0;
 io.on('connection',(socket)=>{
     socket.emit('message','Welcome!');
+    socket.broadcast.emit('message','New user has joined!');
     socket.on('sendMessage',(sendMsg)=>{
         io.emit('message',sendMsg);
-    })
-    // socket.emit('countUpdated',count);
-    // socket.on('increment',()=>{
-    //     count++;
-    //     //socket.emit('countUpdated',count);
-    //     io.emit('countUpdated',count);
-    // });
+    });
+    socket.on('disconnect',()=>{
+        io.emit('message','A user has left! ');
+    });
 });
 server.listen(port,()=>{
     console.log(`Server is running on ${port}`);

@@ -7,5 +7,5 @@ document.querySelector('#message-form').addEventListener('submit',(e)=>{
 });
 
 socket.on('message',(msg)=>{
-    console.log('Greeting message to all  New client connection:',msg);
+    console.log(msg);
 });
