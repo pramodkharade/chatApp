@@ -12,8 +12,9 @@ const port = process.env.PORT || 4000;
 publicDirectoryPath = path.join(__dirname,'../public');
 
 app.use(express.static(publicDirectoryPath));
-io.on('connection',()=>{
-    console.log('new webSocketion connection');
+let count = 0;
+io.on('connection',(socket)=>{
+    socket.emit('countUpdated',count);
 });
 server.listen(port,()=>{
     console.log(`Server is running on ${port}`);
