@@ -28,7 +28,8 @@ $messageForm.addEventListener('submit',(e)=>{
 
 socket.on('message',(msg)=>{
     const html = Mustache.render($messageTemplate,{
-        msgDynamic:msg
+        msgDynamic:msg.text,
+        createdAt:moment(msg.createdAt).format('h:mm:ss a')
     });
     $messages.insertAdjacentHTML('beforeend',html);
     console.log(msg);

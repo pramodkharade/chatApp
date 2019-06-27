@@ -20,3 +20,8 @@ npm i socket.io@2.2.0
 # Template rendering and Dynamic content using 
 
 https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js
+
+# Time format library
+https://momentjs.com/docs/
+
+https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js
