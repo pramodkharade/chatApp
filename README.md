@@ -25,3 +25,7 @@ https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js
 https://momentjs.com/docs/
 
 https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js
+
+# Query String parse and grabing library
+
+https://cdnjs.cloudflare.com/ajax/libs/qs/6.7.0/qs.min.js
