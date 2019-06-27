@@ -8,44 +8,18 @@
 </head>
 
 <body>
-    <div class="chat">
-        <div class="chat__sidebar">
-
-        </div>
-        <div class="chat__main">
-            <div id="messages" class="chat__messages"></div>
-            <div class="compose">
-                <form id="message-form">
-                    <input id="message" placeholder="message">
-                    <button>Send</button>
-                </form>
-                <button id="send-location">Send Location</button>
-            </div>
-        </div>
-    </div>
-    <script id="message-template" type="text/html">
-            <div class="message">
-                    <p>
-                        <span class="message__name">User Name</span>
-                        <span class="message__meta">{{createdAt}}</span>
-                    </p>
-                <p>{{msgDynamic}}</p>
-            </div>
-        </script>
-    <script id="location-message-template" type="text/html">
-            <div class="message">
-                    <p>
-                            <span class="message__name">User Name</span>
-                            <span class="message__meta">{{createdAt}}</span>
-                        </p>
-                <p><a href="{{url}}" target="_blank">My current location:</a></p>
-            </div>
-        </script>
-    <script src="/js/mustache.min.js"></script>
-    <script src="/js/moment.min.js"></script>
-    <script src="/js/qs.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/chat.js"></script>
+   <div class="centered-form">
+       <div class="centered-form__box">
+           <h1>Join</h1>
+           <form action="/chat.html" >
+               <label>Display Name</label>
+               <input type="text" name="username" placeholder="Display Name" required>
+               <label>Room</label>
+               <input type="text" name="room" placeholder="room" required>
+               <button>Join</button>
+           </form>
+       </div>
+   </div>
 </body>
 
 </html>
