@@ -16,3 +16,7 @@ npm run dev
 # socket.io install for websocket
 
 npm i socket.io@2.2.0
+
+# Template rendering and Dynamic content using 
+
+https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js
