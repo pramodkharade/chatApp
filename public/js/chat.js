@@ -11,6 +11,7 @@ const $messageTemplate = document.querySelector('#message-template').innerHTML;
 const $locationmessageTemplate = document.querySelector('#location-message-template').innerHTML;
 /***Options/querystring***/
 const {username,room } = Qs.parse(location.search,{ingnoreQueryPrefix:true});
+
 $messageForm.addEventListener('submit',(e)=>{
     e.preventDefault();
     $messageFormButton.setAttribute('disabled','disabled');
@@ -60,3 +61,5 @@ $sendMessageButton.addEventListener('click',(e)=>{
         
     });
 });
+
+socket.emit('join',{username,room});

@@ -15,14 +15,22 @@ publicDirectoryPath = path.join(__dirname,'../public');
 app.use(express.static(publicDirectoryPath));
 let count = 0;
 io.on('connection',(socket)=>{
-    socket.emit('message',generateMessages('Welcome!'));
-    socket.broadcast.emit('message',generateMessages('New user has joined!'));
+    
+    socket.on('join',({username,room})=>{
+        socket.join(room);
+        socket.emit('message',generateMessages('Welcome!'));
+        socket.broadcast.to(room).emit('message',generateMessages(`${username} has joined.`));
+        /*****
+         * * socket.emit, io.emit,socket.broadcast.emit
+         * io.to.emit , socket.broadcast.to.emit
+         * *********/
+    });
     socket.on('sendMessage',(sendMsg,callback)=>{
         const filter = new Filter();
         if(filter.isProfane(sendMsg)){
             return callback('Profanity word is not allowed.')
         }
-        io.emit('message',generateMessages(sendMsg));
+        io.to('').emit('message',generateMessages(sendMsg));
         callback();
     });
     socket.on('sendLocation',(cords,callback)=>{
