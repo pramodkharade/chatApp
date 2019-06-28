@@ -28,3 +28,12 @@ const addUser = ({ id, username, room }) => {
     users.push(user);
     return { user };
 }
+//  Remove the user by ID
+const removeUser = (id)=>{
+    const index = users.findIndex((user)=>{
+        return user.id== id;
+    });
+    if(index !==-1){
+        users.splice(index,1)[0];
+    }
+}
