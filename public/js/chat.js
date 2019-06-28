@@ -5,10 +5,12 @@ const $messageFrominput = $messageForm.querySelector('#message');
 const $messageFormButton = $messageForm.querySelector('button');
 const $sendMessageButton = document.querySelector('#send-location');
 const $messages = document.querySelector('#messages');
+const $sidebar = document.querySelector('#sidebar');
 
 /*****Template****/
 const $messageTemplate = document.querySelector('#message-template').innerHTML;
 const $locationmessageTemplate = document.querySelector('#location-message-template').innerHTML;
+const $sidebarTemplate = document.querySelector('#sidebar-template').innerHTML;
 /***Options/querystring***/
 
 const {username,room } = Qs.parse(location.search,{ignoreQueryPrefix:true});
@@ -47,7 +49,13 @@ socket.on('locationmessage',(url)=>{
     $messages.insertAdjacentHTML('beforeend',html);
     console.log(url);
 });
-
+socket.on('roomData',({room,users})=>{
+    const html = Mustache.render($sidebarTemplate,{
+        room,
+        users
+    });
+    $sidebar.insertAdjacentHTML('beforeend',html);
+});
 $sendMessageButton.addEventListener('click',(e)=>{
     if(!navigator.geolocation){
         return alert('Geolocation is not supportted to your browser.');
