@@ -31,6 +31,7 @@ $messageForm.addEventListener('submit',(e)=>{
 
 socket.on('message',(msg)=>{
     const html = Mustache.render($messageTemplate,{
+        username:msg.username,
         msgDynamic:msg.text,
         createdAt:moment(msg.createdAt).format('h:mm:ss a')
     });
@@ -39,6 +40,7 @@ socket.on('message',(msg)=>{
 });
 socket.on('locationmessage',(url)=>{
     const html = Mustache.render($locationmessageTemplate,{
+        username:url.username,
         url:url.url,
         createdAt:moment(url.createdAt).format('h:mm:ss a')
     });

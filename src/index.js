@@ -25,8 +25,8 @@ io.on('connection',(socket)=>{
         return callback(error);
        }
         socket.join(user.room);
-        socket.emit('message',generateMessages('Welcome!'));
-        socket.broadcast.to(user.room).emit('message',generateMessages(`${user.username} has joined.`));
+        socket.emit('message',generateMessages('Admin','Welcome!'));
+        socket.broadcast.to(user.room).emit('message',generateMessages('Admin',`${user.username} has joined.`));
         /*****
          * * socket.emit, io.emit,socket.broadcast.emit
          * io.to.emit , socket.broadcast.to.emit
@@ -34,21 +34,23 @@ io.on('connection',(socket)=>{
         callback();
     });
     socket.on('sendMessage',(sendMsg,callback)=>{
+        const user  = getUser(socket.id);
         const filter = new Filter();
         if(filter.isProfane(sendMsg)){
             return callback('Profanity word is not allowed.')
         }
-        io.to('').emit('message',generateMessages(sendMsg));
+        io.to(user.room).emit('message',generateMessages(user.username,sendMsg));
         callback();
     });
     socket.on('sendLocation',(cords,callback)=>{
-        io.emit('locationmessage',generateLocationMessages(`https://google.com/maps?q=${cords.latitude},${cords.longitude}`));
+        const user = getUser(socket.id);
+        io.to(user.room).emit('locationmessage',generateLocationMessages(user.username,`https://google.com/maps?q=${cords.latitude},${cords.longitude}`));
         callback();
     });
     socket.on('disconnect',()=>{
         const user = removeUser(socket.id);
         if(user){
-            io.to(user.room).emit('message',generateMessages(`${user.username} has a left`));
+            io.to(user.room).emit('message',generateMessages('Admin',`${user.username} has a left`));
         }
     });
 });
