@@ -17,8 +17,10 @@ app.use(express.static(publicDirectoryPath));
 let count = 0;
 io.on('connection',(socket)=>{
     
-    socket.on('join',(userobj,callback)=>{
-       const {error,user} = addUser({id:socket.id,...userobj});
+    socket.on('join',({username,room},callback)=>{
+        console.log('usrname:',username);
+       const {error,user} = addUser({id:socket.id,username:username,room:room});
+     
        if(error){
         return callback(error);
        }

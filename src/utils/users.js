@@ -1,6 +1,8 @@
 const users = [];
 
 const addUser = ({ id, username, room }) => {
+    console.log('Username: ',username);
+    console.log('Room:',room);
     //clean the data
     username = username.trim().toLowerCase();
     room = room.trim().toLowerCase();

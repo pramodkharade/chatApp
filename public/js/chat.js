@@ -10,7 +10,8 @@ const $messages = document.querySelector('#messages');
 const $messageTemplate = document.querySelector('#message-template').innerHTML;
 const $locationmessageTemplate = document.querySelector('#location-message-template').innerHTML;
 /***Options/querystring***/
-const {username,room } = Qs.parse(location.search,{ingnoreQueryPrefix:true});
+
+const {username,room } = Qs.parse(location.search,{ignoreQueryPrefix:true});
 
 $messageForm.addEventListener('submit',(e)=>{
     e.preventDefault();
@@ -63,6 +64,7 @@ $sendMessageButton.addEventListener('click',(e)=>{
 });
 
 socket.emit('join',{username,room},(error)=>{
+    console.log('Emit Event:',username);
     if(error){
         alert(error);
         location.href='/';
