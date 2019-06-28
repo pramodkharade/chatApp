@@ -4,7 +4,8 @@ const http = require('http');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
 const app = express();
-const {generateMessages,generateLocationMessages} = require('../src/utils/messages');
+const {generateMessages,generateLocationMessages} = require('./utils/messages');
+const {addUser,removeUser,getUser,getUserInRoom} = require('./utils/users');
 
 const server = http.createServer(app);
 const io = socketio(server);
@@ -16,14 +17,19 @@ app.use(express.static(publicDirectoryPath));
 let count = 0;
 io.on('connection',(socket)=>{
     
-    socket.on('join',({username,room})=>{
-        socket.join(room);
+    socket.on('join',(userobj,callback)=>{
+       const {error,user} = addUser({id:socket.id,...userobj});
+       if(error){
+        return callback(error);
+       }
+        socket.join(user.room);
         socket.emit('message',generateMessages('Welcome!'));
-        socket.broadcast.to(room).emit('message',generateMessages(`${username} has joined.`));
+        socket.broadcast.to(user.room).emit('message',generateMessages(`${user.username} has joined.`));
         /*****
          * * socket.emit, io.emit,socket.broadcast.emit
          * io.to.emit , socket.broadcast.to.emit
          * *********/
+        callback();
     });
     socket.on('sendMessage',(sendMsg,callback)=>{
         const filter = new Filter();
@@ -38,7 +44,10 @@ io.on('connection',(socket)=>{
         callback();
     });
     socket.on('disconnect',()=>{
-        io.emit('message',generateMessages('A user has left! '));
+        const user = removeUser(socket.id);
+        if(user){
+            io.to(user.room).emit('message',generateMessages(`${user.username} has a left`));
+        }
     });
 });
 server.listen(port,()=>{
